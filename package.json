@@ -1,0 +1,32 @@
+{
+  "name": "childrens-kingdom-backend",
+  "version": "1.0.0",
+  "description": "Children's Kingdom App",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eddyrodriguezd/childrens-kingdom-backend.git"
+  },
+  "author": "Eddy Rodriguez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eddyrodriguezd/childrens-kingdom-backend/issues"
+  },
+  "homepage": "https://github.com/eddyrodriguezd/childrens-kingdom-backend#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.1",
+    "jwt-simple": "^0.5.6",
+    "moment": "^2.29.3",
+    "mongoose": "^6.3.2"
+  }
+}
