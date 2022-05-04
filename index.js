@@ -5,14 +5,24 @@ require('dotenv').config({
     path: '.env',
 });
 const cloudinary = require("cloudinary").v2;
-cloudinary.config({ 
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
-    api_key: process.env.CLOUDINARY_API_KEY, 
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
+const cors = require('cors');
+const corsOptions = {
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    origin: [
+        'http://localhost:3000',
+        //"https://sendgrid.api-docs.io",
+    ],
+};
 
 const app = express();
 app.use(express.json());
+app.use(cors(corsOptions));
 
 //Routers
 app.use('/api/products', require('./routers/ProductRouter'));
