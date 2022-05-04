@@ -1,22 +1,17 @@
-//Configuration
 const cloudinary = require("cloudinary").v2;
-cloudinary.config({ 
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
-    api_key: process.env.CLOUDINARY_API_KEY, 
-    api_secret: process.env.CLOUDINARY_API_SECRET
-});
 
 const ProductSchema = require('../models/Product');
 const UploadService = require('./UploadService');
 
-const saveProduct = async ({file, product}) => {
-    const { title, description, price, category, isActive } = product;
+const saveProduct = async (file, product) => {
+    const { title, description, price, category } = product;
+    if (title === undefined) throw new Error('Title is missing');
+    if (description === undefined) throw new Error('Description is missing');
+    if (price === undefined) throw new Error('Price is missing');
+    if (category === undefined) throw new Error('Category is missing');
 
-    //url = await UploadService.uploadImage(file);
-    url='';
-
-    if (title === undefined) throw new Error('title parameter is missing');
-    if (description === undefined) throw new Error('description parameter is missing');
+    const isActive = false;
+    const url = await UploadService.uploadImage(file, category);
 
     const newProduct = new ProductSchema({ title, description, price, category, isActive, url });
 
