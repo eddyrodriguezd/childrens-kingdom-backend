@@ -1,12 +1,26 @@
-const ProductSchema = require('../models/Product');
+//Configuration
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({ 
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
-const saveProduct = async ({ title, description, price, category, isActive, url }) => {
+const ProductSchema = require('../models/Product');
+const UploadService = require('./UploadService');
+
+const saveProduct = async ({file, product}) => {
+    const { title, description, price, category, isActive } = product;
+
+    //url = await UploadService.uploadImage(file);
+    url='';
+
     if (title === undefined) throw new Error('title parameter is missing');
     if (description === undefined) throw new Error('description parameter is missing');
 
-    const product = new ProductSchema({ title, description, price, category, isActive, url });
+    const newProduct = new ProductSchema({ title, description, price, category, isActive, url });
 
-    const savedProduct = await product.save();
+    const savedProduct = await newProduct.save();
     console.log(`Product <${JSON.stringify(savedProduct)}> created`);
     return savedProduct;
 };

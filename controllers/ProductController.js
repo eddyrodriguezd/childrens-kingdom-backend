@@ -2,6 +2,9 @@ const ProductService = require('../services/ProductService');
 
 const createProduct = async (req, res) => {
     try {
+        console.log('req', req);
+        console.log('req.product', req.product);
+        console.log('body', req.body);
         const product = await ProductService.saveProduct(req.body);
         res.status(200).send({ message: 'New product created', data: product });
     } catch (err) {
