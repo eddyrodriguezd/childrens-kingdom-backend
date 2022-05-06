@@ -1,7 +1,7 @@
 const moment = require('moment');
 
 const { getById } = require('../services/UserService');
-const { decodeToken } = require('../services/JwtService');
+const { decodeToken } = require('../services/utils/JwtService');
 
 const secret = process.env.JWT_SECRET_KEY;
 

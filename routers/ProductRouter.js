@@ -8,6 +8,7 @@ const api = require('express').Router();
 
 api.post("/", isAuthenticated, isAdmin, upload.single('image'), ProductController.createProduct);
 api.get("/category/:category", ProductController.getAllActiveProductsByCategory);
+api.put("/:id", isAuthenticated, isAdmin, ProductController.updateProductInfo);
 //api.get("/:id", isAuthenticated, getOne);
 //api.post("/:id", isAuthenticated, addItem);
 //api.delete("/:id", isAuthenticated, deleteList);

@@ -1,6 +1,6 @@
 const UserSchema = require('../models/User');
 
-const { createAccessToken } = require('../services/JwtService');
+const { createAccessToken } = require('./utils/JwtService');
 
 const createUser = async ({ email, password }) => {
     if (email === undefined || email.length === 0) throw new Error('Email parameter is missing');

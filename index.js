@@ -25,6 +25,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 //Routers
+app.use('/api/orders', require('./routers/OrderRouter'));
 app.use('/api/products', require('./routers/ProductRouter'));
 app.use('/api/auth', require('./routers/UserRouter'));
 

@@ -26,6 +26,17 @@ const getAllActiveProductsByCategory = async (req, res) => {
     }
 }
 
+const updateProductInfo = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const updatedProduct = await ProductService.updateProductInfo(id, req.body);
+        res.status(200).send({ message: 'Product updated', data: updatedProduct });
+    } 
+    catch (err) {
+        res.status(400).send({ error: err.message });
+    }
+}
+
 /*const getOne = async (req, res) => {
     const listId = req.params.id;
     const favList = await FavListService.findOneList(req.user, listId);
@@ -69,5 +80,6 @@ const deleteList = async (req, res) => {
 
 module.exports = {
     createProduct,
-    getAllActiveProductsByCategory
+    getAllActiveProductsByCategory,
+    updateProductInfo
 };
