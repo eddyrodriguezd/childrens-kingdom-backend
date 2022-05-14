@@ -4,12 +4,14 @@ const UploadService = require('./utils/UploadService');
 const saveProduct = async (file, product) => {
     const { title, description, price, category, availableColors } = product;
     if (title === undefined) throw new Error('Title is missing');
-    if (description === undefined) throw new Error('Description is missing');
+    //if (description === undefined) throw new Error('Description is missing');
     if (price === undefined) throw new Error('Price is missing');
     if (category === undefined) throw new Error('Category is missing');
 
     const isActive = false;
+    
     const url = await UploadService.uploadImage(file, category);
+    return null;
 
     const newProduct = new ProductSchema({ title, description, price, category, isActive, url });
 
