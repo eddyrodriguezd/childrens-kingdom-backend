@@ -14,8 +14,15 @@ const OrderSchema = Schema({
     }],
     totalPrice: { type: Number, required: true },
     payment: {
-        transactionId: { type: String, required: false },
-        type: { type: String, required: true }
+        token: { type: String, required: true },
+        payer: {
+            email: { type: String, required: true },
+            identification: {
+                type: { type: String, required: true },
+                number: { type: String, required: true },
+            }
+        },
+        installments: { type: Number, required: true },
     },
     status: { type: String, required: true }
 }, {

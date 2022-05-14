@@ -27,13 +27,14 @@ app.use(cors(corsOptions));
 //Routers
 app.use('/api/orders', require('./routers/OrderRouter'));
 app.use('/api/products', require('./routers/ProductRouter'));
+app.use('/api/colors', require('./routers/ColorRouter'));
 app.use('/api/auth', require('./routers/UserRouter'));
 
 //Run
 app.listen(process.env.PORT || 8000, () => {
     mongoose.connect(process.env.DB_CONNECTION_STRING_URI)
-        .then(() => console.log(`Successfully connected to DB <{${process.env.DB_CONNECTION_STRING_URI}}>`))
-        .catch(err => console.log(`Couldn't connect to DB <{${process.env.DB_CONNECTION_STRING_URI}}>. Error: ${err}`));
+        .then(() => console.log(`Successfully connected to DB <{${process.env.DB_CONNECTION_STRING_URI.split('@')[1]}}>`))
+        .catch(err => console.log(`Couldn't connect to DB <{${process.env.DB_CONNECTION_STRING_URI.split('@')[1]}}>. Error: ${err}`));
 });
 
 module.exports = app;

@@ -1,10 +1,8 @@
-const cloudinary = require("cloudinary").v2;
-
 const ProductSchema = require('../models/Product');
 const UploadService = require('./utils/UploadService');
 
 const saveProduct = async (file, product) => {
-    const { title, description, price, category } = product;
+    const { title, description, price, category, availableColors } = product;
     if (title === undefined) throw new Error('Title is missing');
     if (description === undefined) throw new Error('Description is missing');
     if (price === undefined) throw new Error('Price is missing');
