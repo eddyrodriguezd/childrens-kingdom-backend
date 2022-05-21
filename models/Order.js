@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 const OrderSchema = Schema({
     client: {
         id: { type: String, required: true },
-        email: { type: String, required: true, unique: true },
+        email: { type: String, required: false },
     },
     products: [{
         id: { type: String, required: true },
@@ -14,15 +14,15 @@ const OrderSchema = Schema({
     }],
     totalPrice: { type: Number, required: true },
     payment: {
-        token: { type: String, required: true },
+        token: { type: String, required: false },
         payer: {
-            email: { type: String, required: true },
+            email: { type: String, required: false },
             identification: {
-                type: { type: String, required: true },
-                number: { type: String, required: true },
+                type: { type: String, required: false },
+                number: { type: String, required: false },
             }
         },
-        installments: { type: Number, required: true },
+        installments: { type: Number, required: false },
     },
     status: { type: String, required: true }
 }, {
