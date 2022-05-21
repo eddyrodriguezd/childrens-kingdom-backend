@@ -10,7 +10,7 @@ const OrderSchema = Schema({
         title: { type: String, required: true },
         price: { type: Number, required: true },
         quantity: { type: Number, required: true },
-        category: { type: String, required: true }
+        category: { type: String, required: false }
     }],
     totalPrice: { type: Number, required: true },
     payment: {

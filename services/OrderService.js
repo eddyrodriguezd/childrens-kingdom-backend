@@ -1,7 +1,7 @@
 const OrderSchema = require('../models/Order');
 const { sendConfirmedOrderMail } = require('../services/utils/sendEmail');
 
-const saveOrder = async (user, { products, paymentTransactionId }) => {
+const saveOrder = async (user, { products, payment }) => {
 
     const id = '6277ed3d0204989505c46be2';
     const email = 'eddyrodriguezdlc@gmail.com';
@@ -13,10 +13,11 @@ const saveOrder = async (user, { products, paymentTransactionId }) => {
 
     products.forEach(p => {
         if (p.id === undefined || p.title === undefined || p.price === undefined ||
-            p.quantity === undefined || p.category === undefined) throw new Error('Product information is missing');
+            p.quantity === undefined /*|| p.category === undefined*/) throw new Error('Product information is missing');
     });
     
     const totalPrice = products.map(p => p.price).reduce((acc, cur) => cur + acc, 0);
+    console.log("Order's total price:", totalPrice);
 
     const newOrder = new OrderSchema({
         client: {
@@ -25,10 +26,7 @@ const saveOrder = async (user, { products, paymentTransactionId }) => {
         },
         products,
         totalPrice,
-        payment: {
-            transactionId: paymentTransactionId,
-            type: 'DEBIT/CREDIT CARD'
-        },
+        payment,
         status: 'CONFIRMED'
     });
 
