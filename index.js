@@ -16,7 +16,7 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization'],
     origin: [
         'http://localhost:3000',
-        //"https://sendgrid.api-docs.io",
+        'http://ck-front.s3-website.us-east-2.amazonaws.com'
     ],
 };
 
@@ -31,7 +31,7 @@ app.use('/api/colors', require('./routers/ColorRouter'));
 app.use('/api/auth', require('./routers/UserRouter'));
 
 //Run
-app.listen(process.env.PORT || 8000, () => {
+app.listen(process.env.PORT || 49160, () => {
     mongoose.connect(process.env.DB_CONNECTION_STRING_URI)
         .then(() => console.log(`Successfully connected to DB <{${process.env.DB_CONNECTION_STRING_URI.split('@')[1]}}>`))
         .catch(err => console.log(`Couldn't connect to DB <{${process.env.DB_CONNECTION_STRING_URI.split('@')[1]}}>. Error: ${err}`));
