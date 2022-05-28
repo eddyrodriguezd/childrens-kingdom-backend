@@ -24,7 +24,7 @@ describe("Product Controller", function () {
     });
 
     it("Should return create new product (200 status code)", async () => {
-      let productCreated = {
+      const productCreated = {
         _id: "600abcde000a0abc0abcd000",
         ...product,
         isActive: true,
@@ -44,19 +44,62 @@ describe("Product Controller", function () {
       });
     });
 
-    it("Should throw a Bad Request Error (400 status code)", async () => {
+    it("Should throw a Bad Request Error when trying to create new product(400 status code)", async () => {
       stubbedService = sinon
         .stub(Service, "saveProduct")
-        .throws(new Error("Name parameter is missing"));
+        .throws(new Error("Title parameter is missing"));
 
       mReq = {body: {...product, title: null}, file: file};
 
       await Controller.createProduct(mReq, mRes);
-      
+
       sinon.assert.calledWith(mRes.status, 400);
       sinon.assert.calledWith(mRes.send, {
-        error: "Name parameter is missing",
+        error: "Title parameter is missing",
       });
     });
   });
+
+  describe("Fetch products by category", function () {
+    let stubbedService;
+    let mReq, mRes;
+
+    beforeEach(function () {
+      mRes = { status: sinon.stub().returnsThis(), send: sinon.stub() };
+    });
+
+    afterEach(function () {
+      stubbedService.restore();
+    });
+
+    it("Should return a list of two products (200 status code)", async () => {
+      const products = [product, product];
+
+      stubbedService = sinon.stub(Service, "findAllActiveProductsByCategory").resolves(products);
+
+      mReq = {params: {category: 'health'}};
+
+      await Controller.getAllActiveProductsByCategory(mReq, mRes);
+
+      sinon.assert.calledWith(mRes.status, 200);
+      sinon.assert.calledWith(mRes.send, {
+        message: 'Products retrieved',
+        data: products,
+      });
+    });
+
+    it("SShould return an empty list (200 status code)", async () => {
+      const products = [];
+
+      stubbedService = sinon.stub(Service, "findAllActiveProductsByCategory").resolves(products);
+
+      mReq = {params: {category: 'health'}};
+
+      await Controller.getAllActiveProductsByCategory(mReq, mRes);
+
+      sinon.assert.calledWith(mRes.status, 200);
+      sinon.assert.calledWith(mRes.send, {message: 'No products for this category'});
+    });
+  });
+
 });
