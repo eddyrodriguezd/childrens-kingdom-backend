@@ -4,12 +4,12 @@ const Service = require("../../services/ProductService");
 
 describe("Product Controller", function () {
   const product = {
-    title: 'Frasco de melatonina',
-    description: 'Contiene 50 gomitas',
+    title: "Frasco de melatonina",
+    description: "Contiene 50 gomitas",
     price: 110,
-    category: 'health',
+    category: "health",
   };
-  const file = '/tmp/file.jpg';
+  const file = "/tmp/file.jpg";
 
   describe("Save new product", function () {
     let stubbedService;
@@ -28,18 +28,20 @@ describe("Product Controller", function () {
         _id: "600abcde000a0abc0abcd000",
         ...product,
         isActive: true,
-        url: 'https://res.cloudinary.com/dhd7i9orq/image/upload/'
+        url: "https://res.cloudinary.com/dhd7i9orq/image/upload/img001.jpg",
       };
 
-      stubbedService = sinon.stub(Service, "saveProduct").resolves(productCreated);
+      stubbedService = sinon
+        .stub(Service, "saveProduct")
+        .resolves(productCreated);
 
-      mReq = {body: product, file: file};
+      mReq = { body: product, file: file };
 
       await Controller.createProduct(mReq, mRes);
 
       sinon.assert.calledWith(mRes.status, 200);
       sinon.assert.calledWith(mRes.send, {
-        message: 'New product created',
+        message: "New product created",
         data: productCreated,
       });
     });
@@ -49,7 +51,7 @@ describe("Product Controller", function () {
         .stub(Service, "saveProduct")
         .throws(new Error("Title parameter is missing"));
 
-      mReq = {body: {...product, title: null}, file: file};
+      mReq = { body: { ...product, title: null }, file: file };
 
       await Controller.createProduct(mReq, mRes);
 
@@ -75,15 +77,17 @@ describe("Product Controller", function () {
     it("Should return a list of two products (200 status code)", async () => {
       const products = [product, product];
 
-      stubbedService = sinon.stub(Service, "findAllActiveProductsByCategory").resolves(products);
+      stubbedService = sinon
+        .stub(Service, "findAllActiveProductsByCategory")
+        .resolves(products);
 
-      mReq = {params: {category: 'health'}};
+      mReq = { params: { category: "health" } };
 
       await Controller.getAllActiveProductsByCategory(mReq, mRes);
 
       sinon.assert.calledWith(mRes.status, 200);
       sinon.assert.calledWith(mRes.send, {
-        message: 'Products retrieved',
+        message: "Products retrieved",
         data: products,
       });
     });
@@ -91,15 +95,18 @@ describe("Product Controller", function () {
     it("SShould return an empty list (200 status code)", async () => {
       const products = [];
 
-      stubbedService = sinon.stub(Service, "findAllActiveProductsByCategory").resolves(products);
+      stubbedService = sinon
+        .stub(Service, "findAllActiveProductsByCategory")
+        .resolves(products);
 
-      mReq = {params: {category: 'health'}};
+      mReq = { params: { category: "health" } };
 
       await Controller.getAllActiveProductsByCategory(mReq, mRes);
 
       sinon.assert.calledWith(mRes.status, 200);
-      sinon.assert.calledWith(mRes.send, {message: 'No products for this category'});
+      sinon.assert.calledWith(mRes.send, {
+        message: "No products for this category",
+      });
     });
   });
-
 });
