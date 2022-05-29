@@ -5,16 +5,16 @@ const Product = require("../../models/Product");
 const assert = require("assert");
 
 describe("Product Service", function () {
-  describe("Save product", function () {
-    const product = {
-      title: "Frasco de melatonina",
-      description: "Contiene 50 gomitas",
-      price: 110,
-      category: "health",
-    };
-    const file = "/tmp/file.jpg";
-    const url = "https://res.cloudinary.com/dhd7i9orq/image/upload/img001.jpg";
+  const product = {
+    title: "Frasco de melatonina",
+    description: "Contiene 50 gomitas",
+    price: 110,
+    category: "health",
+  };
+  const file = "/tmp/file.jpg";
+  const url = "https://res.cloudinary.com/dhd7i9orq/image/upload/img001.jpg";
 
+  describe("Save product", function () {
     let uploadStubbedService;
 
     afterEach(function () {
@@ -66,6 +66,17 @@ describe("Product Service", function () {
             "Cannot destructure property 'title' of 'product' as it is undefined.",
         }
       );
+    });
+  });
+
+  describe("Fetch products by category", function () {
+
+    it("Should bring list with products", async () => {
+      sinon.stub(Product, "findByCategoryAndIsActive").resolves([product]);
+
+      const result = await Service.findAllActiveProductsByCategory(product.category);
+
+      assert.equal(result[0], product);
     });
   });
 });
