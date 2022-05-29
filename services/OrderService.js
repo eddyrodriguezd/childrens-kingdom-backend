@@ -13,7 +13,7 @@ const saveOrder = async (user, { products, payment }) => {
 
     products.forEach(p => {
         if (p.id === undefined || p.title === undefined || p.price === undefined ||
-            p.quantity === undefined /*|| p.category === undefined*/) throw new Error('Product information is missing');
+            p.quantity === undefined || p.category === undefined) throw new Error('Product information is missing');
     });
     
     const totalPrice = products.map(p => p.price).reduce((acc, cur) => cur + acc, 0);
